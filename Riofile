@@ -1,0 +1,22 @@
+--- 
+services: 
+  notion-api-worker: 
+    autoscale: 
+      concurrency: 10
+      maxReplicas: 10
+      minReplicas: 1
+    build: 
+      branch: master
+      imageName: munditrade/notion-api-worker
+      pr: false
+      webhookSecretName: githubtoken
+      cloneSecretName: gitcredential
+      repo: "https://github.com/munditrade/notion-api-worker.git"
+      stageOnly: false
+      tag: false
+    env: 
+      - NODE_ENV=production
+      - NOTION_TOKEN=secret://notion-secrets/token
+    ports: 
+      - "80:3000/http,web"
+    template: false
